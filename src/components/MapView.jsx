@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, ExternalLink, Layers, RefreshCw } from 'lucide-react';
+import { API_BASE_URL } from '../api';
 
 function MapView({ existingToilets, proposedToilets, isLoading = false }) {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -17,9 +18,9 @@ function MapView({ existingToilets, proposedToilets, isLoading = false }) {
   useEffect(() => {
     const fetchMap = async () => {
       try {
-        const response = await fetch('/api/map');
+        const response = await fetch(`${API_BASE_URL}/map`);
         if (response.ok) {
-          setMapUrl('/api/map');
+          setMapUrl(`${API_BASE_URL}/map`);
           setMapGenerated(true);
         }
       } catch (error) {
@@ -51,11 +52,11 @@ function MapView({ existingToilets, proposedToilets, isLoading = false }) {
   const regenerateMap = async () => {
     try {
       // Trigger optimization to regenerate map
-      const response = await fetch('/api/optimize');
+      const response = await fetch(`${API_BASE_URL}/optimize`);
       if (response.ok) {
         setMapGenerated(true);
         setTimeout(() => {
-          setMapUrl('/api/map?t=' + Date.now()); // Cache bust
+          setMapUrl(`${API_BASE_URL}/map?t=` + Date.now()); // Cache bust
         }, 2000);
       }
     } catch (error) {
@@ -118,8 +119,8 @@ function MapView({ existingToilets, proposedToilets, isLoading = false }) {
         {/* Background with satellite/street view effect */}
         <div
           className={`absolute inset-0 transition-all duration-500 ${showSatellite
-              ? 'bg-[url("https://tile.openstreetmap.org/16/56020/38241.png")] bg-cover bg-center opacity-40'
-              : 'bg-gradient-to-br from-green-100 via-blue-50 to-yellow-50'
+            ? 'bg-[url("https://tile.openstreetmap.org/16/56020/38241.png")] bg-cover bg-center opacity-40'
+            : 'bg-gradient-to-br from-green-100 via-blue-50 to-yellow-50'
             }`}
         >
           {/* Grid lines for visual reference */}
