@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://kibera-sp-backend-b871.vercel.app/:path*"
+    }
+  ]
+}

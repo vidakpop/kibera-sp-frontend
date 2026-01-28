@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, ExternalLink, Layers, RefreshCw } from 'lucide-react';
-import { API_BASE_URL } from '../api';
 
 function MapView({ existingToilets, proposedToilets, isLoading = false }) {
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -18,9 +17,9 @@ function MapView({ existingToilets, proposedToilets, isLoading = false }) {
   useEffect(() => {
     const fetchMap = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/map`);
+        const response = await fetch('/api/map');
         if (response.ok) {
-          setMapUrl(`${API_BASE_URL}/map`);
+          setMapUrl('/api/map');
           setMapGenerated(true);
         }
       } catch (error) {
@@ -52,11 +51,11 @@ function MapView({ existingToilets, proposedToilets, isLoading = false }) {
   const regenerateMap = async () => {
     try {
       // Trigger optimization to regenerate map
-      const response = await fetch(`${API_BASE_URL}/optimize`);
+      const response = await fetch('/api/optimize');
       if (response.ok) {
         setMapGenerated(true);
         setTimeout(() => {
-          setMapUrl(`${API_BASE_URL}/map?t=` + Date.now()); // Cache bust
+          setMapUrl('/api/map?t=' + Date.now()); // Cache bust
         }, 2000);
       }
     } catch (error) {

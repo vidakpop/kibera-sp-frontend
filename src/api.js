@@ -1,5 +1,5 @@
 // API Configuration - Using Vite proxy to avoid CORS issues
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'; // Proxied locally, direct in prod
+const API_BASE_URL = '/api'; // This will be proxied to http://localhost:8001
 
 // API Functions
 export async function fetchOptimization() {
